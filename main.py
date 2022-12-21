@@ -59,7 +59,6 @@ def init():
                     print(f"Exception Occurred {Ex} ")
                 except paramiko.ssh_exception.AuthenticationException as Ex:
                     print(f"Exception Occurred {Ex} ")
-                print("My name is Evan")
            # except paramiko.ssh_exception:
                 #     print(f"Exception Found when connecting to {host} ")
                 #
