@@ -59,14 +59,7 @@ def init():
                     print(f"Exception Occurred {Ex} ")
                 except paramiko.ssh_exception.AuthenticationException as Ex:
                     print(f"Exception Occurred {Ex} ")
-           # except paramiko.ssh_exception:
-                #     print(f"Exception Found when connecting to {host} ")
-                #
-                # except netmiko.exceptions.NetmikoTimeoutException:
-                #     print(f"Timeout Exception when connecting to {host}, please try telnet")
-                #
-                # except paramiko.ssh_exception.NoValidConnectionsError:
-                #     print(f"Unable to connect to port 22 on {host}, please try telnet")
+
     f.close()
     port_totals.close()
 
