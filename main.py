@@ -10,25 +10,28 @@ def init():
         port_totals.write("Switch Name, Up Ports, Down Ports, Total Ports\n")
         with open("host_list.txt", 'r') as host_list:
             for host in host_list.readlines():
-                sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-                result = sock.connect_ex((host.removesuffix('\n'), 22))
-                if result == 0:
-                    print(f"Socket Result is : {result}")
-                    device = driver(
-                        hostname=f"{host}",
-                        username="net-services",
-                        password="ns0905",
-                        optional_args={"port": 22},
-                    )
-                elif result == 1:
-                    print(f"Socket Result is : {result}")
-                    device = driver(
-                        hostname=f"{host}",
-                        username="net-services",
-                        password="ns0905",
-                        optional_args={"transport": 'telnet'},
-                    )
-                sock.close()
+                try:
+                    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+                    result = sock.connect_ex((host.removesuffix('\n'), 22))
+                    if result == 0:
+                        print(f"Socket Result is : {result}")
+                        device = driver(
+                            hostname=f"{host}",
+                            username="net-services",
+                            password="ns0905",
+                            optional_args={"port": 22},
+                        )
+                    else:
+                        print(f"Socket Result is : {result}")
+                        device = driver(
+                            hostname=f"{host}",
+                            username="net-services",
+                            password="ns0905",
+                            optional_args={"transport": 'telnet'},
+                        )
+                    sock.close()
+                except socket.timeout:
+                    continue
                 try:
                     print(f"Opening {host}")
                     device.open()
@@ -60,7 +63,7 @@ def init():
                         f.close()
                         device.close()
                         print(f"Device Closed... {host}")
-                    port_totals.write(f"{name['hostname']}, {up_ports}, {down_ports}, {port_count}\n")
+                        port_totals.write(f"{name['hostname']}, {up_ports}, {down_ports}, {port_count}\n")
                     print("Written to port totals.")
                 except netmiko.exceptions.ReadTimeout as Ex:
                     print(f"Exception Occurred {Ex} ")
