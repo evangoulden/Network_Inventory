@@ -3,6 +3,7 @@ import netmiko.exceptions
 import paramiko.ssh_exception
 import socket
 
+
 def init():
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     driver = napalm.get_network_driver("ios")
